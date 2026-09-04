@@ -57,14 +57,10 @@
             <div class="card-header">
                 <h2><i class="fa-solid fa-cloud-arrow-up"></i> 1. Document Ingestion & Due Diligence Scan</h2>
             </div>
-            <div class="upload-flex-container">
-                <div class="dropzone-box">
-                    <input type="file" id="pdfFile" accept="application/pdf" onchange="updateFileName()">
-                    <label for="pdfFile" class="dropzone-label">
-                        <i class="fa-solid fa-file-contract dropzone-icon"></i>
-                        <span id="fileNameDisplay">Select 10-K, Annual Report, or Balance Sheet PDF</span>
-                    </label>
-                </div>
+            <div class="upload-box" id="uploadBox" onclick="document.getElementById('fileInput').click()" style="cursor: pointer; padding: 20px; border: 2px dashed #4a5568; border-radius: 8px; text-align: center;">
+  <span id="fileLabel">📄 Select 10-K, Annual Report, or Balance Sheet PDF</span>
+  <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="handleFileSelect(event)" />
+</div>
                 <button class="btn-primary-glow" onclick="uploadPDF()">
                     <i class="fa-solid fa-microchip"></i> Run Full Audit Pipeline
                 </button>

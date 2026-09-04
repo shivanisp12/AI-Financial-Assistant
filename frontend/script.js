@@ -1,4 +1,4 @@
-const API_URL = "const API_BASE_URL = "https://ai-financial-assistant-ajeq.onrender.com";";
+const API_URL = "http://127.0.0.1:8000";
 let revChart = null;
 let riskChart = null;
 
@@ -207,4 +207,11 @@ async function askQuestion() {
     } catch (error) {
         answerOutput.innerText = "Error connecting to backend API.";
     }
+}
+// Display the selected file name in the upload box
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (file) {
+    document.getElementById('fileLabel').innerText = `📄 Selected File: ${file.name}`;
+  }
 }
