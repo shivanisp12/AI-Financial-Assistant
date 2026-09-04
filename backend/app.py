@@ -9,15 +9,16 @@ from openai import AzureOpenAI
 
 load_dotenv()
 
-from fastapi.middleware.cors import CORSMiddleware
+app = FastAPI(title="Enterprise Financial Due Diligence & Audit Engine")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"], # Update to production URL after deployment
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 DOCUMENT_STORE = []
 DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
 os.makedirs(DATA_DIR, exist_ok=True)
