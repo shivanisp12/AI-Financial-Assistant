@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise AI Financial Due Diligence Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Animated Cyber Canvas Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="app-viewport">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="brand">
+                <i class="fa-solid fa-shield-halved brand-logo"></i>
+                <div>
+                    <span class="app-title">FINANCIAL DUE DILIGENCE & AUDIT TERMINAL</span>
+                    <span class="app-sub">Automated Risk Scanner & Executive KPI Extractor</span>
+                </div>
+            </div>
+            <div class="nav-badges">
+                <span class="badge badge-pulse"><i class="fa-solid fa-server"></i> AZURE RAG PIPELINE</span>
+                <span class="badge badge-cyan"><i class="fa-solid fa-shield-check"></i> AUDIT SECURE</span>
+            </div>
+        </header>
+
+        <!-- Command KPI Metrics Bar -->
+        <div class="kpi-hud-grid">
+            <div class="hud-card border-cyan">
+                <span class="hud-label"><i class="fa-solid fa-heart-pulse"></i> FINANCIAL HEALTH SCORE</span>
+                <div class="hud-value" id="valHealth">--/100</div>
+                <span class="hud-sub" id="valHealthSub">Upload PDF to Audit</span>
+            </div>
+            <div class="hud-card border-red">
+                <span class="hud-label"><i class="fa-solid fa-triangle-exclamation"></i> RISK ASSESSMENT</span>
+                <div class="hud-value" id="valRiskLevel">PENDING</div>
+                <span class="hud-sub">Automated Anomaly Scan</span>
+            </div>
+            <div class="hud-card border-blue">
+                <span class="hud-label"><i class="fa-solid fa-file-invoice"></i> INGESTED DISCLOSURES</span>
+                <div class="hud-value" id="valPages">0 PAGES</div>
+                <span class="hud-sub" id="valWords">0 Tokens Extracted</span>
+            </div>
+            <div class="hud-card border-emerald">
+                <span class="hud-label"><i class="fa-solid fa-list-check"></i> AUDIT ANOMALIES</span>
+                <div class="hud-value" id="valAnomaliesCount">0 FLAGGED</div>
+                <span class="hud-sub">Compliance Filter</span>
+            </div>
+        </div>
+
+        <!-- Main Ingestion Area -->
+        <section class="glass-card">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-cloud-arrow-up"></i> 1. Document Ingestion & Due Diligence Scan</h2>
+            </div>
+            <div class="upload-flex-container">
+                <div class="dropzone-box">
+                    <input type="file" id="pdfFile" accept="application/pdf" onchange="updateFileName()">
+                    <label for="pdfFile" class="dropzone-label">
+                        <i class="fa-solid fa-file-contract dropzone-icon"></i>
+                        <span id="fileNameDisplay">Select 10-K, Annual Report, or Balance Sheet PDF</span>
+                    </label>
+                </div>
+                <button class="btn-primary-glow" onclick="uploadPDF()">
+                    <i class="fa-solid fa-microchip"></i> Run Full Audit Pipeline
+                </button>
+            </div>
+            <div id="pipelineProgress" class="pipeline-progress" style="display:none;">
+                <div class="progress-step active" id="p1"><i class="fa-solid fa-upload"></i> Azure Storage</div>
+                <div class="progress-step" id="p2"><i class="fa-solid fa-magnifying-glass"></i> Anomaly Scanner</div>
+                <div class="progress-step" id="p3"><i class="fa-solid fa-table-list"></i> KPI Extraction</div>
+            </div>
+            <p id="uploadStatus" class="status-text"></p>
+        </section>
+
+        <!-- Dynamic Workspace Tabs -->
+        <div class="workspace-tabs" id="workspaceTabs" style="display:none;">
+            <button class="tab-btn active" onclick="switchTab('kpiTab')"><i class="fa-solid fa-table"></i> Extracted Financial Statements</button>
+            <button class="tab-btn" onclick="switchTab('analyticsTab')"><i class="fa-solid fa-chart-line"></i> Visual Analytics & Risk Radar</button>
+            <button class="tab-btn" onclick="switchTab('anomaliesTab')"><i class="fa-solid fa-bug"></i> Audit Anomaly Tracker</button>
+            <button class="tab-btn" onclick="switchTab('ragTab')"><i class="fa-solid fa-terminal"></i> Interactive RAG Console</button>
+        </div>
+
+        <!-- TAB 1: Extracted KPI Table -->
+        <section class="glass-card tab-content" id="kpiTab" style="display:none;">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-table-cells"></i> Automated Financial Statement Metrics</h2>
+            </div>
+            <table class="audit-table">
+                <thead>
+                    <tr>
+                        <th>Financial Metric</th>
+                        <th>Extracted Value</th>
+                        <th>YoY Variance</th>
+                        <th>Audit Status</th>
+                    </tr>
+                </thead>
+                <tbody id="kpiTableBody">
+                    <!-- Populated via script -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- TAB 2: Visual Charts -->
+        <section class="glass-card tab-content" id="analyticsTab" style="display:none;">
+            <div class="dashboard-grid">
+                <div class="chart-box">
+                    <h3>Financial Performance & OPEX Variance</h3>
+                    <div class="chart-container"><canvas id="revenueChart"></canvas></div>
+                </div>
+                <div class="chart-box">
+                    <h3>Risk Disclosures & Legal Liability Distribution</h3>
+                    <div class="chart-container"><canvas id="riskRadarChart"></canvas></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: Anomaly Tracker -->
+        <section class="glass-card tab-content" id="anomaliesTab" style="display:none;">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-triangle-exclamation"></i> Flagged Compliance & Audit Risks</h2>
+            </div>
+            <div id="anomaliesList" class="anomalies-container">
+                <!-- Populated via script -->
+            </div>
+        </section>
+
+        <!-- TAB 4: Grounded Q&A -->
+        <section class="glass-card tab-content" id="ragTab" style="display:none;">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-terminal"></i> Executive RAG Query Console</h2>
+            </div>
+            <div class="query-bar">
+                <input type="text" id="userQuestion" placeholder="Query specific notes, auditor qualifications, or segment revenues...">
+                <button class="btn-cyan-glow" onclick="askQuestion()"><i class="fa-solid fa-magnifying-glass"></i> Execute Query</button>
+            </div>
+            <div class="result-box">
+                <div class="result-top">
+                    <span id="auditVerdict" class="verdict-tag">CITATIONS PENDING</span>
+                </div>
+                <div id="answerOutput" class="answer-text">Upload a document and select a tab to begin analysis.</div>
+                <div id="sourceOutput" class="source-text">Source: Unverified</div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
